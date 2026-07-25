@@ -1,5 +1,5 @@
 {
-  "project-name": "<FILL THIS>",
-  "project-oneliner": "<FILL THIS>",
-  "project-description": "<FILL THIS>"
+  "project-name": "JamRoom",
+  "project-oneliner": "Colaboración musical para bandas: letras y composiciones en un solo lugar.",
+  "project-description": "JamRoom lets bands invite members, chat, co-edit lyrics and sheet music in real time, with Songsterr-style tab playback, music theory tools, and audio transcription."
 }

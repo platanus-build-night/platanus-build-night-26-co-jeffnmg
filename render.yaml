@@ -1,0 +1,12 @@
+# Blueprint para el servicio de transcripción en Render.
+# Dashboard → New → Blueprint → conectar este repo.
+services:
+  - type: web
+    name: jamroom-transcribe
+    runtime: docker
+    rootDir: services/transcribe
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: PORT
+        value: "8000"

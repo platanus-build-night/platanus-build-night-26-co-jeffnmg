@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  name         String
+  passwordHash String
+  createdAt    DateTime      @default(now())
+  memberships  BandMember[]
+  songsCreated Song[]        @relation("SongCreator")
+  messages     ChatMessage[]
+}
+
+model Band {
+  id          String        @id @default(cuid())
+  name        String
+  description String?
+  inviteCode  String        @unique
+  createdAt   DateTime      @default(now())
+  members     BandMember[]
+  songs       Song[]
+  messages    ChatMessage[]
+}
+
+model BandMember {
+  id     String @id @default(cuid())
+  role   String @default("member") // owner | admin | member
+  userId String
+  bandId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  band   Band   @relation(fields: [bandId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, bandId])
+}
+
+model Song {
+  id        String        @id @default(cuid())
+  title     String
+  lyrics    String        @default("")
+  scoreJson String        @default("{}")
+  bpm       Int           @default(100)
+  key       String        @default("C major")
+  timeSig   String        @default("4/4")
+  updatedAt DateTime      @updatedAt
+  createdAt DateTime      @default(now())
+  bandId    String
+  createdBy String
+  band      Band          @relation(fields: [bandId], references: [id], onDelete: Cascade)
+  creator   User          @relation("SongCreator", fields: [createdBy], references: [id])
+  messages  ChatMessage[]
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  userId    String
+  bandId    String
+  songId    String? // null = mensaje de banda; con valor = mensaje de canción
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  band      Band     @relation(fields: [bandId], references: [id], onDelete: Cascade)
+  song      Song?    @relation(fields: [songId], references: [id], onDelete: Cascade)
+}

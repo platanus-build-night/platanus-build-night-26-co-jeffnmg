@@ -1,38 +1,40 @@
-# Jefferson Nuñez Muñoz — Platanus Build Night — Bogotá @ Buk Project
+# JamRoom
 
-**Current project logo:** project-logo.png
+Espacio de trabajo para bandas: miembros, canciones, letras, chat y un **Composer Studio** estilo Songsterr/Guitar Pro con edición colaborativa en vivo.
 
-<img src="./project-logo.png" alt="Project Logo" width="200" />
+> Songsterr + Discord para tu banda — partituras sincronizadas, chat y edición en vivo.
 
-Hacker:
+**Demo:** https://jamroom-two.vercel.app
 
-- Jefferson Nuñez Muñoz ([@jeffnmg](https://github.com/jeffnmg))
+## Stack
 
-Before submitting:
+- Next.js 15 · TypeScript · Tailwind · shadcn/ui
+- Auth.js · Prisma · Neon (PostgreSQL)
+- Zustand · VexFlow · Tone.js · tonal · smplr
+- Liveblocks (presencia, sync, chat)
+- FastAPI + Basic Pitch en Render (transcripción)
 
-- ✅ Set a project name, oneliner and description in build-night-project.json
-- ✅ Provide a 1000x1000 png project logo, max 500kb (project-logo.png)
-- ✅ Provide a concise and to the point readme
+## Cómo correr
 
-## ⚠️ Deploying (Vercel, Render, etc.)
+```bash
+npm install
+cp .env.example .env   # DATABASE_URL, AUTH_SECRET, Liveblocks, TRANSCRIBE_API_URL
+npx prisma db push
+npm run dev
+```
 
-Deploy platforms like **Vercel**, **Render** or **Netlify** can only connect to
-repositories **you own** — they can't be granted access to this organization repo.
-To deploy while keeping your commits here, mirror your code to a personal repo:
+Abrir http://localhost:3000
 
-1. Create a **personal** repository on your own GitHub account.
-2. Point your local `origin` at **both** repos, so a single `git push` updates each one:
+```bash
+npm test
+```
 
-   ```bash
-   # this org repo (keep it as a push target)...
-   git remote set-url --add --push origin https://github.com/platanus-build-night/platanus-build-night-26-co-jeffnmg.git
-   # ...and your personal repo
-   git remote set-url --add --push origin https://github.com/<your-user>/<your-repo>.git
-   ```
+## Deploy
 
-   From now on `git push` sends every commit to **both** repositories.
-3. Connect your deploy service (Vercel, Render, …) to your **personal** repo and deploy from there.
+| Pieza | Servicio | URL |
+|-------|----------|-----|
+| App | Vercel | https://jamroom-two.vercel.app |
+| DB | Neon | PostgreSQL |
+| Transcripción | Render | https://jamroom-transcribe.onrender.com |
 
-Your commits stay mirrored here for judging, while the deploy runs from the repo you control.
-
-Have fun! 🚀
+El deploy de Vercel/Render está conectado al repo personal [`jeffnmg/JamRoom`](https://github.com/jeffnmg/JamRoom) (mirror); este repo de la org se usa para la entrega.
